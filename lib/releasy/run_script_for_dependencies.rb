@@ -15,8 +15,8 @@ at_exit do
   end
 end
 
-# Try to convince it to quit before it runs properly by faking being Ocra.
-module Ocra; end
+# Try to convince it to quit before it runs properly by faking being Ocran.
+module Ocran; end
 module Releasy; end
 
 # Run the script we are asked to and give it the remaining arguments.

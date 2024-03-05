@@ -1,8 +1,8 @@
 require 'fileutils'
-require 'ocra'
+require 'ocran'
 
 module Releasy
-  # Creates wrappers and executables by wrapping Ocra's functionality.
+  # Creates wrappers and executables by wrapping Ocran's functionality.
   class WindowsWrapperMaker
     # Creates an win32 executable file (xxx.exe) that runs via a Ruby executable at bin/ruby(w).exe
     # Paths given to the executable are relative to the directory that the executable is in.
@@ -24,11 +24,11 @@ module Releasy
           :icon => nil,
       }.merge! options
 
-      load_ocra unless defined? Ocra::OcraBuilder
-      set_ocra_options options[:icon]
+      load_ocran unless defined? Ocran::OcranBuilder
+      set_ocran_options options[:icon]
 
-      Ocra::OcraBuilder.new(executable_file, options[:windows]) do |sb|
-        root = Ocra.Pathname Ocra::TEMPDIR_ROOT
+      Ocran::OcranBuilder.new(executable_file, options[:windows]) do |sb|
+        root = Ocran.Pathname Ocran::TEMPDIR_ROOT
 
         sb.setenv('RUBYOPT', options[:rubyopt])
         sb.setenv('RUBYLIB', options[:rubylib])
@@ -47,8 +47,8 @@ module Releasy
     end
 
     protected
-    def set_ocra_options(icon)
-      options = Ocra.instance_variable_get(:@options)
+    def set_ocran_options(icon)
+      options = Ocran.instance_variable_get(:@options)
       options[:lzma_mode] = false
       options[:chdir_first] = true
       options[:icon_filename] = icon
@@ -57,29 +57,29 @@ module Releasy
     end
 
     protected
-    def load_ocra
-      Object.send(:remove_const, :Ocra) # remove the "class Ocra", so we can load the "module Ocra"
-      spec = Gem.loaded_specs['ocra']
+    def load_ocran
+      Object.send(:remove_const, :Ocran) # remove the "class Ocran", so we can load the "module Ocran"
+      spec = Gem.loaded_specs['ocran']
 
       # If we aren't on Windows, then File::ALT_SEPARATOR won't be defined or will be defined to the local system.
       # To save breaking the world, change it as we load, not in File itself.
-      ocra_file = spec.bin_file(spec.executable)
+      ocran_file = spec.bin_file(spec.executable)
       if Gem.win_platform?
-        load ocra_file
+        load ocran_file
       else
-        script = File.read(ocra_file)
+        script = File.read(ocran_file)
         # On non-windows, UTF8 is the standard way to load files, which is not what we want at all since it will complain about "\xFF".
         script.force_encoding Encoding::ASCII_8BIT if script.respond_to? :force_encoding
         script.gsub!("File::ALT_SEPARATOR", "'\\\\\\\\'")
-        Object.class_eval script, ocra_file
+        Object.class_eval script, ocran_file
       end
 
       # Need to disable this method so we get the right output.
-      Ocra::OcraBuilder.class_eval do
+      Ocran::OcranBuilder.class_eval do
         def createinstdir(*args); end
       end
 
-      Ocra.find_stubs
+      Ocran.find_stubs
 
       nil
     end

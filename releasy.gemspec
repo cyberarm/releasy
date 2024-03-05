@@ -25,13 +25,13 @@ END
   s.test_files    = Dir["test/**/*_test.rb"]
   s.executable    = "releasy"
 
-  s.add_runtime_dependency('ocra', '~> 1.3.0')
+  s.add_runtime_dependency('ocran', '~> 1.3.0')
   s.add_runtime_dependency('bundler', '>= 1.2.1')
   s.add_runtime_dependency('rake', '>= 0.9.2.2')
-  s.add_runtime_dependency('cri', '~> 2.1.0')
+  s.add_runtime_dependency('cri', '~> 2.15.0')
 
   s.add_development_dependency('riot', '~> 0.12.5')
-  s.add_development_dependency('rr', '~> 1.0.4')
-  s.add_development_dependency('yard', '~> 0.9.11')
-  s.add_development_dependency('redcarpet', '~> 2.0.1')
+  s.add_development_dependency('rr', '~> 3.1.0')
+  s.add_development_dependency('yard', '~> 0.9.36')
+  s.add_development_dependency('redcarpet', '~> 3.6.0')
 end

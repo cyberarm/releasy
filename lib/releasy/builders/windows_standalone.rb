@@ -1,4 +1,4 @@
-require "releasy/builders/ocra_builder"
+require "releasy/builders/ocran_builder"
 
 module Releasy
   module Builders
@@ -15,7 +15,7 @@ module Releasy
     #       add_package :zip       # Optional
     #     end
     #   end
-    class WindowsStandalone < OcraBuilder
+    class WindowsStandalone < OcranBuilder
       TYPE = :windows_standalone
       DEFAULT_FOLDER_SUFFIX = "WIN32_EXE"
 
@@ -31,10 +31,10 @@ module Releasy
 
           create_link_files folder
 
-          execute_command %[#{ocra_command} --output "#{folder}/#{executable_name}"]
+          execute_command %[#{ocran_command} --output "#{folder}/#{executable_name}"]
         end
 
-        desc "Build standalone exe #{project.version} [Ocra]"
+        desc "Build standalone exe #{project.version} [Ocran]"
         task "build:windows:standalone" => folder
       end
 

@@ -1,9 +1,9 @@
-require "releasy/builders/ocra_builder"
+require "releasy/builders/ocran_builder"
 
 module Releasy
   module Builders
     # Builds a win32 installer for the application.
-    class WindowsInstaller < OcraBuilder
+    class WindowsInstaller < OcranBuilder
       TYPE = :windows_installer
       INSTALLER_SCRIPT = "windows_installer.iss"
       DEFAULT_FOLDER_SUFFIX = "WIN32_INSTALLER"
@@ -50,7 +50,7 @@ module Releasy
       protected
       def create_installer(file, options = {})
         generate_installer_script file, options
-        execute_command %[#{ocra_command} --chdir-first --no-lzma --innosetup "#{temp_installer_script}"]
+        execute_command %[#{ocran_command} --chdir-first --no-lzma --innosetup "#{temp_installer_script}"]
       end
 
       # Generate innosetup script to build installer.

@@ -1,4 +1,4 @@
-require "releasy/builders/ocra_builder"
+require "releasy/builders/ocran_builder"
 require 'releasy/windows_wrapper_maker'
 
 module Releasy
@@ -14,7 +14,7 @@ module Releasy
     #       add_package :zip       # Optional
     #     end
     #   end
-    class WindowsFolder < OcraBuilder
+    class WindowsFolder < OcranBuilder
       TYPE = :windows_folder
       DEFAULT_FOLDER_SUFFIX = "WIN32"
 
@@ -25,13 +25,13 @@ module Releasy
       def generate_tasks
         file folder => project.files do
           mkdir_p project.output_path, **fileutils_options
-          tmp_ocra_executable = "#{folder}.exe"
+          tmp_ocran_executable = "#{folder}.exe"
 
-          execute_command %[#{ocra_command} --output "#{tmp_ocra_executable}" --debug-extract]
+          execute_command %[#{ocran_command} --output "#{tmp_ocran_executable}" --debug-extract]
 
           # Extract the files from the executable.
-          system tmp_ocra_executable
-          rm tmp_ocra_executable, **fileutils_options
+          system tmp_ocran_executable
+          rm tmp_ocran_executable, **fileutils_options
 
           extracted_folder_pattern = "#{File.dirname(folder)}/ocr*.tmp"
           extracted_folder = Dir[extracted_folder_pattern].first
